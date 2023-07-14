@@ -1,11 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const ProfileInfo = () => {
     return (
-        <div>
+        <ProfileInfoStyled>
           Ava + description
-        </div>
+        </ProfileInfoStyled>
     );
 };
 
 export default ProfileInfo;
+
+const ProfileInfoStyled = styled.div`
+  
+`

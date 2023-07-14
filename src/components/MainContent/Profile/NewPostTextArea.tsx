@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 const NewPostTextArea = () => {
     return (
-        <StyledTextArea placeholder={"Enter your post"}/>
+        <div>
+          <StyledTextArea placeholder={"Enter your post"}/>
+        </div>
     );
 };
 
