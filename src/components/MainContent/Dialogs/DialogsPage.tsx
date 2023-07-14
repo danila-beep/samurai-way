@@ -1,23 +1,35 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import DialogItem from "./DialogItem";
 import Message from "./Message";
 
-export const DialogsPage = () => {
+type DialogsPageProps = {
+    dialogsData: {
+        id: string,
+        name: string 
+    }[],
+    messagesData: { 
+        text: string
+    }[]
+}
+
+export const DialogsPage: FC<DialogsPageProps> = (props) => {
+
+    const {dialogsData, messagesData} = props
+    
   return (
     <DialogsPageWrapper>
       <DialogsListWrapper>
         <DialogsList>
-            <DialogItem id={"1"} userName={"Danila"}/>
-            <DialogItem id={"2"} userName={"Vasya"}/>
-            <DialogItem id={"3"} userName={"Ivan"}/>
-            <DialogItem id={"4"} userName={"Petya"}/>
+            {dialogsData.map(d => {
+                return <DialogItem key={d.id} id={d.id} userName={d.name}/>
+            })}
         </DialogsList>
       </DialogsListWrapper>
       <MessengerWrapper>
-        <Message messageText={"Hi"}/>
-        <Message messageText={"How are you"}/>
-        <Message messageText={"Greate"}/>
+        {messagesData.map((m, index) => {
+            return <Message key={index} messageText={m.text}/>
+        })}
       </MessengerWrapper>
     </DialogsPageWrapper>
   );

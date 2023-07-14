@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-const Post = () => {
+type PostProps = {
+    postText: string
+}
+
+const Post: FC<PostProps> = (props) => {
+    const {postText} = props
     return (
         <div>
-            Some Post
+            {postText}
         </div>
     );
 };

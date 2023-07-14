@@ -1,26 +1,28 @@
-import React from "react";
+import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-export const SideBar = () => {
+type SideBarProps = {
+  navigationItemsData: {
+    link: string;
+    title: string;
+  }[];
+};
+
+export const SideBar: FC<SideBarProps> = (props) => {
+  const { navigationItemsData } = props;
+
+  const navigationItemsForRender = navigationItemsData.map((navI) => {
+    return (
+      <NavigationItem>
+        <NavLink to={`/${navI.link}`}>{navI.title}</NavLink>
+      </NavigationItem>
+    );
+  });
   return (
     <NavigationWrapper>
       <NavigationListContainer>
-        <NavigationItem>
-          <NavLink to="/profile">Profile</NavLink>
-        </NavigationItem>
-        <NavigationItem>
-          <NavLink to="/dialogs">Dialogs</NavLink>
-        </NavigationItem>
-        <NavigationItem>
-          <NavLink to="/news">News</NavLink>
-        </NavigationItem>
-        <NavigationItem>
-          <NavLink to="/music">Music</NavLink>
-        </NavigationItem>
-        <NavigationItem>
-          <NavLink to="/settings">Settings</NavLink>
-        </NavigationItem>
+        {navigationItemsForRender}
       </NavigationListContainer>
     </NavigationWrapper>
   );
@@ -36,14 +38,12 @@ const NavigationListContainer = styled.ul`
   padding-top: 1rem;
   padding-left: 1rem;
   padding-bottom: 1rem;
-
-
 `;
 const NavigationItem = styled.li`
   transition: 0.3s;
 
   & a.active {
-    color: cyan
+    color: cyan;
   }
   & a:hover {
     color: red;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import "./App.css";
 import styled from "styled-components";
 import { SideBar } from "./components/SideBar";
@@ -7,21 +7,51 @@ import ProfilePage from "./components/MainContent/Profile/ProfilePage";
 import { DialogsPage } from "./components/MainContent/Dialogs/DialogsPage";
 import { Route } from "react-router-dom";
 
-function App() {
+type AppProps = {
+  navigationItemsData: {
+    link: string;
+    title: string;
+  }[];
+  postsData: {
+    text: string;
+  }[];
+  dialogsData: {
+    id: string;
+    name: string;
+  }[];
+  messagesData: {
+    text: string;
+  }[];
+};
+
+const App: FC<AppProps> = (props) => {
+  const { navigationItemsData, postsData, dialogsData, messagesData } = props;
+
   return (
     <AppWrapper>
       <Header />
-      <SideBar />
+      <SideBar navigationItemsData={navigationItemsData} />
       <MainContentWrapper>
-        <Route path={"/profile"} component={ProfilePage}/>
-        <Route path={"/dialogs"} component={DialogsPage} />
+        <Route
+          path={"/profile"}
+          render={() => <ProfilePage postsData={postsData} />}
+        />
+        <Route
+          path={"/dialogs"}
+          render={() => (
+            <DialogsPage
+              dialogsData={dialogsData}
+              messagesData={messagesData}
+            />
+          )}
+        />
         {/* <Route path={"/news"} component={NewsPage} /> */}
         {/* <Route path={"/music"} component={MusicPage} /> */}
         {/* <Route path={"/settings"} component={SettingsPage} /> */}
       </MainContentWrapper>
     </AppWrapper>
   );
-}
+};
 
 export default App;
 
