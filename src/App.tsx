@@ -6,26 +6,19 @@ import { Header } from "./components/Header";
 import ProfilePage from "./components/MainContent/Profile/ProfilePage";
 import { DialogsPage } from "./components/MainContent/Dialogs/DialogsPage";
 import { Route } from "react-router-dom";
+import UsersPage from "./components/MainContent/Users/UsersPage";
 
 type AppProps = {};
 
 const App: FC<AppProps> = (props) => {
-
   return (
     <AppWrapper>
       <Header />
       <SideBar />
       <MainContentWrapper>
-        <Route
-          path={"/profile"}
-          render={() => <ProfilePage />}
-        />
-        <Route
-          path={"/dialogs"}
-          render={() => (
-            <DialogsPage />
-          )}
-        />
+        <Route path={"/profile"} render={() => <ProfilePage />} />
+        <Route path={"/dialogs"} render={() => <DialogsPage />} />
+        <Route path={"/friends"} render={() => <UsersPage />} />
         {/* <Route path={"/news"} component={NewsPage} /> */}
         {/* <Route path={"/music"} component={MusicPage} /> */}
         {/* <Route path={"/settings"} component={SettingsPage} /> */}

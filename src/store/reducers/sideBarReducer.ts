@@ -1,6 +1,7 @@
 const sideBarState = [
   { link: "profile", title: "Profile" },
   { link: "dialogs", title: "Dialogs" },
+  { link: "friends", title: "Friends" },
   { link: "news", title: "News" },
   { link: "music", title: "Music" },
   { link: "settings", title: "Settings" },
