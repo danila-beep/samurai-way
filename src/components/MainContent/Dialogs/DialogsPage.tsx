@@ -1,35 +1,52 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import DialogItem from "./DialogItem";
 import Message from "./Message";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import {
+  DialogPageType,
+  DialogType,
+  MessageType,
+  addMessageAC,
+} from "../../../store/reducers/dialogsReducer";
+import TextArea from "../../../shared/TextArea";
+import { Button } from "../../../shared/Button";
 
-type DialogsPageProps = {
-    dialogsData: {
-        id: string,
-        name: string 
-    }[],
-    messagesData: { 
-        text: string
-    }[]
-}
+type DialogsPageProps = {};
 
 export const DialogsPage: FC<DialogsPageProps> = (props) => {
+  const dialogsState = useSelector<RootState, DialogPageType>(
+    (state) => state.dialogsPage
+  );
+  const dispatch = useDispatch();
 
-    const {dialogsData, messagesData} = props
-    
+  const [textAreaValue, setTextAreaValue] = useState<string>("");
+
+  const addMessage = () => {
+    const action = addMessageAC(textAreaValue);
+    dispatch(action);
+    setTextAreaValue("");
+  };
+
   return (
     <DialogsPageWrapper>
       <DialogsListWrapper>
         <DialogsList>
-            {dialogsData.map(d => {
-                return <DialogItem key={d.id} id={d.id} userName={d.name}/>
-            })}
+          {dialogsState.dialogs.map((d: DialogType) => {
+            return <DialogItem key={d.id} id={d.id} userName={d.userName} />;
+          })}
         </DialogsList>
       </DialogsListWrapper>
       <MessengerWrapper>
-        {messagesData.map((m, index) => {
-            return <Message key={index} messageText={m.text}/>
+        {dialogsState.messages.map((m: MessageType, index: number) => {
+          return <Message key={index} messageText={m.text} />;
         })}
+        <TextArea
+          value={textAreaValue}
+          onChange={(e) => setTextAreaValue(e.currentTarget.value)}
+        />
+        <Button onClick={addMessage}>Add new Message</Button>
       </MessengerWrapper>
     </DialogsPageWrapper>
   );

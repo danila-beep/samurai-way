@@ -1,27 +1,37 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ProfileInfo from "./ProfileInfo";
-import NewPostTextArea from "./NewPostTextArea";
+import NewPostTextArea from "../../../shared/TextArea";
 import Post from "./Post";
-import { NewPostButton } from "./NewPostButton";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import TextArea from "../../../shared/TextArea";
+import { Button } from "../../../shared/Button";
+import { addPostAC } from "../../../store/reducers/profileReducer";
 
-type ProfilePageProps = {
-    postsData: {
-        text: string
-    }[]
-}
+type ProfilePageProps = {};
 
 const ProfilePage: FC<ProfilePageProps> = (props) => {
-    const {postsData} = props
-  
+  const profilePageData = useSelector((state: RootState) => state.profilePage);
+  const dispatch = useDispatch();
+
+  const [textAreaValue, setTextAreaValue] = useState<string>("");
+
+  const addPost = () => {
+    const action = addPostAC(textAreaValue);
+    dispatch(action);
+    setTextAreaValue("")
+  };
+
   return (
     <>
       <ProfileInfo />
       <h2>My Posts</h2>
-      <NewPostTextArea />
-      <NewPostButton />
-      {postsData.map((post) => {
-        console.log(post);
-        return <Post postText={post.text} />;
+      <div>
+        <TextArea value={textAreaValue} onChange={e => setTextAreaValue(e.currentTarget.value)}/>
+      </div>
+      <Button onClick={addPost}>Add New Post</Button>
+      {profilePageData.posts.map((post) => {
+        return <Post postText={post.postText} />;
       })}
     </>
   );

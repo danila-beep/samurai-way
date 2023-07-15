@@ -1,20 +1,17 @@
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { RootState } from "../store/store";
 
-type SideBarProps = {
-  navigationItemsData: {
-    link: string;
-    title: string;
-  }[];
-};
+type SideBarProps = {};
 
 export const SideBar: FC<SideBarProps> = (props) => {
-  const { navigationItemsData } = props;
+  const sideBarData = useSelector((state: RootState) => state.sideBar);
 
-  const navigationItemsForRender = navigationItemsData.map((navI) => {
+  const navigationItemsForRender = sideBarData.map((navI) => {
     return (
-      <NavigationItem>
+      <NavigationItem key={navI.link}>
         <NavLink to={`/${navI.link}`}>{navI.title}</NavLink>
       </NavigationItem>
     );

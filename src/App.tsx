@@ -7,42 +7,23 @@ import ProfilePage from "./components/MainContent/Profile/ProfilePage";
 import { DialogsPage } from "./components/MainContent/Dialogs/DialogsPage";
 import { Route } from "react-router-dom";
 
-type AppProps = {
-  navigationItemsData: {
-    link: string;
-    title: string;
-  }[];
-  postsData: {
-    text: string;
-  }[];
-  dialogsData: {
-    id: string;
-    name: string;
-  }[];
-  messagesData: {
-    text: string;
-  }[];
-};
+type AppProps = {};
 
 const App: FC<AppProps> = (props) => {
-  const { navigationItemsData, postsData, dialogsData, messagesData } = props;
 
   return (
     <AppWrapper>
       <Header />
-      <SideBar navigationItemsData={navigationItemsData} />
+      <SideBar />
       <MainContentWrapper>
         <Route
           path={"/profile"}
-          render={() => <ProfilePage postsData={postsData} />}
+          render={() => <ProfilePage />}
         />
         <Route
           path={"/dialogs"}
           render={() => (
-            <DialogsPage
-              dialogsData={dialogsData}
-              messagesData={messagesData}
-            />
+            <DialogsPage />
           )}
         />
         {/* <Route path={"/news"} component={NewsPage} /> */}
