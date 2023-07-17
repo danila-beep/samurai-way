@@ -1,18 +1,14 @@
-const usersState = {
-  users: {
-    items: [],
-    totalCount: 0,
-    error: null
-  },
-};
-
 export type UserPageType = {
-  users: UsersListType
+  users: UsersListType,
+  pageSize: number,
+  totalUsersCount: number,
+  currentPage: number,
+  isFetching: boolean
 };
 
 export type UsersListType = {
   items: UserType[];
-  totalCount: number;
+  totalUsersCount: number;
   error: string | null;
 };
 
@@ -30,7 +26,21 @@ export type UserType = {
 type ActionsType =
   | ReturnType<typeof followUserAC>
   | ReturnType<typeof unfollowUserAC>
-  | ReturnType<typeof setUsersAC>;
+  | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof currentPageChengerAC>
+  | ReturnType<typeof setTotalUsersCount>
+
+const usersState = {
+  users: {
+    items: [],
+    totalUsersCount: 0,
+    error: null
+  },
+  pageSize: 5,
+  totalUsersCount: 0,
+  currentPage: 1,
+  isFetching: false
+};
 
 const usersReducer = (
   state: UserPageType = usersState,
@@ -61,6 +71,10 @@ const usersReducer = (
       };
     case "usersPage/setUsers":
       return {...state, users: action.users};
+    case "usersPage/changeCurrentPage":
+      return {...state, currentPage: action.value}
+    case "usersPage/setTotalUsersCount": 
+      return {...state, totalUsersCount: action.value}
     default:
       return state;
   }
@@ -75,5 +89,11 @@ export const unfollowUserAC = (userId: number) => {
 export const setUsersAC = (users: UsersListType) => {
   return { type: "usersPage/setUsers", users } as const;
 };
+export const currentPageChengerAC = (value: number) => {
+  return { type: "usersPage/changeCurrentPage", value} as const
+}
+export const setTotalUsersCount = (value: number) => {
+  return { type: "usersPage/setTotalUsersCount", value} as const
+}
 
 export default usersReducer;
