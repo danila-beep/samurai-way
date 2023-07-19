@@ -1,0 +1,71 @@
+.headerWrapper {
+    position: fixed;
+    background: var(--bg-color02);
+    width: 100vw;
+}
+
+.headerContainer {
+    margin: 1rem 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.leftContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+    align-items: center;
+}
+
+.leftContainer h1 {
+    color: var(--primary-color);
+}
+
+.headerSearchForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-color01);
+    border-radius: 1.4rem;
+    padding: .5rem;
+}
+
+.headerSearchForm svg{
+    color: var(--text-color03)
+}
+
+.headerSearchForm input {
+    border: none;
+    background: transparent;
+    color: var(--text-color02);
+}
+
+.rightContainer {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+    align-items: center;
+}
+
+.rightContainer svg {
+    cursor: pointer;
+    transition: .3s;
+    color: var(--primary-color);
+}
+
+.rightContainer svg:hover {
+    transform: scale(110%);
+}
+
+.rightContainer svg:nth-child(4) {
+    margin-left: 1rem;
+    border: .1rem solid var(--primary-color);
+    border-radius: 50%;
+    padding: .2rem;
+}
+.rightContainer svg:nth-child(4):hover {
+    transform: none;
+}

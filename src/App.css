@@ -1,0 +1,17 @@
+.App {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Content {
+  width: 100%;
+  margin-top: 5rem;
+  padding: 1rem;
+  margin-left: 273px;
+}
