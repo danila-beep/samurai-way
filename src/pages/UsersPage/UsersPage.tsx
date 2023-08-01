@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styles from "./usersPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import {
@@ -13,6 +14,8 @@ import { Button } from "../../shared/Button";
 import axios from "axios";
 import { baseURL } from "../../constants";
 import styled from "styled-components";
+import { UilArrowLeft, UilArrowRight } from "@iconscout/react-unicons";
+import { NavLink } from "react-router-dom";
 
 const UsersPage = () => {
   //getting data from redux
@@ -32,6 +35,7 @@ const UsersPage = () => {
           .then((response) => {
             const data = response.data;
             console.log(data);
+            
             dispatch(setUsersAC(data));
             dispatch(setTotalUsersCount(data.totalCount));
           });
@@ -48,13 +52,9 @@ const UsersPage = () => {
     usersPageData.totalUsersCount / usersPageData.pageSize
   );
 
-  console.log(pagesCount);
-
   const [pagesForRender, setPagesForRender] = useState<Array<number>>([
     1, 2, 3, 4, 5,
   ]);
-
-  console.log(pagesForRender);
 
   const nextPages = () => {
     const nextPagesArray: Array<number> = [...pagesForRender];
@@ -77,21 +77,28 @@ const UsersPage = () => {
     }
   };
 
+  const followButtonHandler = (isFollowed: boolean, userId: number) => {
+    if (isFollowed) {
+      dispatch(unfollowUserAC(userId))
+    }
+    else {
+      dispatch(followUserAC(userId))
+    }
+  }
+
   return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+    <div className={styles.usersPageWrapper}>
+      <div className={styles.usersList}>
         {usersPageData.users.items.map((user) => {
           return (
-            <div
-              key={user.id}
-              style={{
-                display: "inline-block",
-                padding: "10px",
-                margin: "10px",
-                border: "1px solid black",
-              }}
-            >
-              <div>
+            <div key={user.id} className={styles.userCard}>
+              <div className={styles.userCardHeader}>
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNJywAxz6Z9hzwF0VZ3FdVkZ9o1I1_7wN72w&usqp=CAU"
+                  alt=""
+                />
+              </div>
+              <div className={styles.userCardUserInfo}>
                 <img
                   src={
                     user.photos.small
@@ -101,45 +108,41 @@ const UsersPage = () => {
                   width={100}
                   alt=""
                 />
+                <span>{user.name}</span>
               </div>
-              <span>{user.name}</span>
-              <div>
-                <Button onClick={() => dispatch(followUserAC(user.id))}>
-                  Follow
-                </Button>
-                <Button onClick={() => dispatch(unfollowUserAC(user.id))}>
-                  Unfollow
+              <div className={styles.userCardFollowButtons}>
+                <Button onClick={() => followButtonHandler(user.followed, user.id)}>
+                  {user.followed ? "Unfollow" : "Follow"}
                 </Button>
               </div>
-              <div>{user.followed.toString()}</div>
             </div>
           );
         })}
       </div>
-      <PageSelectorWrapper>
-        <span onClick={previousPages}>back</span>
+      <div className={styles.pagesWrapper}>
+        <span className={styles.pagesListChanger} onClick={previousPages}>
+          <UilArrowLeft />
+        </span>
         {pagesForRender.map((p, index) => {
           return (
-            <span
+            <NavLink
+              to={`friends`}
+              className={styles.pageItem}
               key={index}
               onClick={() => {
                 dispatch(currentPageChengerAC(p));
               }}
             >
               {p}
-            </span>
+            </NavLink>
           );
         })}
-        <span onClick={nextPages}>next</span>
-      </PageSelectorWrapper>
+        <span onClick={nextPages}>
+          <UilArrowRight />
+        </span>
+      </div>
     </div>
   );
 };
 
 export default UsersPage;
-
-const PageSelectorWrapper = styled.div`
-  & span:hover {
-    color: red;
-  }
-`;

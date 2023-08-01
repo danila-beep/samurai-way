@@ -20,7 +20,7 @@ const profileReducer = (state = profilePageState, action: ActionsType) => {
   switch (action.type) {
     case "profilePage/AddPost":
       const newState = {...state};
-      newState.posts.push(action.newPost)
+      newState.posts.unshift(action.newPost)
       return newState
     default:
       return state;
