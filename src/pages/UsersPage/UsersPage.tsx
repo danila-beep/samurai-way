@@ -6,16 +6,22 @@ import {
   UserPageType,
   currentPageChengerAC,
   followUserAC,
+  followUserTC,
+  getUsersTC,
+  nextPagesPaginationAC,
+  previousPagesPaginationAC,
   setTotalUsersCount,
   setUsersAC,
   unfollowUserAC,
+  unfollowUserTC,
 } from "../../store/reducers/usersReducer";
 import { Button } from "../../shared/Button";
 import axios from "axios";
-import { baseURL } from "../../constants";
 import styled from "styled-components";
 import { UilArrowLeft, UilArrowRight } from "@iconscout/react-unicons";
 import { NavLink } from "react-router-dom";
+import { useSessionStorage } from "usehooks-ts";
+import Preloader from "../../shared/Preloader";
 
 const UsersPage = () => {
   //getting data from redux
@@ -24,27 +30,10 @@ const UsersPage = () => {
   );
   const dispatch = useDispatch();
 
-  //API call
+  //API "get" call
   useEffect(() => {
-    const getUsersFromApi = async () => {
-      try {
-        axios
-          .get(
-            `${baseURL}/users?page=${usersPageData.currentPage}&count=${usersPageData.pageSize}`
-          )
-          .then((response) => {
-            const data = response.data;
-            console.log(data);
-            
-            dispatch(setUsersAC(data));
-            dispatch(setTotalUsersCount(data.totalCount));
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUsersFromApi();
-  }, [usersPageData.currentPage, usersPageData.pageSize]);
+    dispatch(getUsersTC(usersPageData.currentPage, usersPageData.pageSize));
+  }, [dispatch, usersPageData.currentPage, usersPageData.pageSize]);
 
   //pagination logic
 
@@ -52,95 +41,92 @@ const UsersPage = () => {
     usersPageData.totalUsersCount / usersPageData.pageSize
   );
 
-  const [pagesForRender, setPagesForRender] = useState<Array<number>>([
-    1, 2, 3, 4, 5,
-  ]);
-
   const nextPages = () => {
-    const nextPagesArray: Array<number> = [...pagesForRender];
-    if (nextPagesArray[4] >= pagesCount) {
-      setPagesForRender(nextPagesArray);
-    } else {
-      nextPagesArray.push(nextPagesArray[4] + 1);
-      nextPagesArray.shift();
-      setPagesForRender(nextPagesArray);
-    }
+    dispatch(nextPagesPaginationAC(pagesCount));
   };
   const previousPages = () => {
-    const previousPagesArray: Array<number> = [...pagesForRender];
-    if (previousPagesArray[0] <= 1) {
-      setPagesForRender(previousPagesArray);
-    } else {
-      previousPagesArray.pop();
-      previousPagesArray.unshift(previousPagesArray[0] - 1);
-      setPagesForRender(previousPagesArray);
-    }
+    dispatch(previousPagesPaginationAC(pagesCount));
   };
+
+  //follow / unfollow
 
   const followButtonHandler = (isFollowed: boolean, userId: number) => {
     if (isFollowed) {
-      dispatch(unfollowUserAC(userId))
+      dispatch(unfollowUserTC(userId));
+    } else {
+      dispatch(followUserTC(userId));
     }
-    else {
-      dispatch(followUserAC(userId))
-    }
-  }
+  };
 
   return (
     <div className={styles.usersPageWrapper}>
-      <div className={styles.usersList}>
-        {usersPageData.users.items.map((user) => {
-          return (
-            <div key={user.id} className={styles.userCard}>
-              <div className={styles.userCardHeader}>
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNJywAxz6Z9hzwF0VZ3FdVkZ9o1I1_7wN72w&usqp=CAU"
-                  alt=""
-                />
-              </div>
-              <div className={styles.userCardUserInfo}>
-                <img
-                  src={
-                    user.photos.small
-                      ? user.photos.small
-                      : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                  }
-                  width={100}
-                  alt=""
-                />
-                <span>{user.name}</span>
-              </div>
-              <div className={styles.userCardFollowButtons}>
-                <Button onClick={() => followButtonHandler(user.followed, user.id)}>
-                  {user.followed ? "Unfollow" : "Follow"}
-                </Button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className={styles.pagesWrapper}>
-        <span className={styles.pagesListChanger} onClick={previousPages}>
-          <UilArrowLeft />
-        </span>
-        {pagesForRender.map((p, index) => {
-          return (
-            <NavLink
-              to={`friends`}
-              className={styles.pageItem}
-              key={index}
-              onClick={() => {
-                dispatch(currentPageChengerAC(p));
-              }}
-            >
-              {p}
-            </NavLink>
-          );
-        })}
-        <span onClick={nextPages}>
-          <UilArrowRight />
-        </span>
-      </div>
+      {usersPageData.isFetching ? (
+        <div className={styles.preloaderContainer}>
+          <Preloader />
+        </div>
+      ) : (
+        <div>
+          <div className={styles.usersList}>
+            {usersPageData.users.items.map((user) => {
+              return (
+                <div key={user.id} className={styles.userCard}>
+                  <div className={styles.userCardHeader}>
+                    <img
+                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNJywAxz6Z9hzwF0VZ3FdVkZ9o1I1_7wN72w&usqp=CAU"
+                      alt=""
+                    />
+                  </div>
+                  <div className={styles.userCardUserInfo}>
+                    <NavLink to={`profile/${user.id}`}>
+                      <img
+                        src={
+                          user.photos.small
+                            ? user.photos.small
+                            : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                        }
+                        width={100}
+                        alt=""
+                      />
+                    </NavLink>
+                    <span>{user.name}</span>
+                  </div>
+                  <div className={styles.userCardFollowButtons}>
+                    <Button
+                      onClick={() =>
+                        followButtonHandler(user.followed, user.id)
+                      }
+                    >
+                      {user.followed ? "Unfollow" : "Follow"}
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className={styles.pagesWrapper}>
+            <span className={styles.pagesListChanger} onClick={previousPages}>
+              <UilArrowLeft />
+            </span>
+            {usersPageData.paginationCount.map((p, index) => {
+              return (
+                <NavLink
+                  to={`friends`}
+                  className={styles.pageItem}
+                  key={index}
+                  onClick={() => {
+                    dispatch(currentPageChengerAC(p));
+                  }}
+                >
+                  {p}
+                </NavLink>
+              );
+            })}
+            <span onClick={nextPages}>
+              <UilArrowRight />
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

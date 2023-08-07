@@ -22,8 +22,7 @@ const FeedPage: FC<FeedPageProps> = (props) => {
   const [textAreaValue, setTextAreaValue] = useState<string>("");
 
   const addPost = () => {
-    const action = addPostAC(textAreaValue);
-    dispatch(action);
+    dispatch(addPostAC(textAreaValue));
     setTextAreaValue("");
   };
 

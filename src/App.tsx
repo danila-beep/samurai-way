@@ -3,7 +3,7 @@ import "./App.css";
 import { Header } from "./components/Header/Header";
 import { SideBar } from "./components/SideBar/SideBar";
 import { Route } from "react-router-dom";
-import ProfilePage from "./pages/FeedPage/FeedPage";
+import FeedPage from "./pages/FeedPage/FeedPage";
 import { DialogsPage } from "./pages/DialogsPage/DialogsPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
 
@@ -16,7 +16,7 @@ const App: FC<AppProps> = (props) => {
       <main>
         <SideBar />
         <div className="Content">
-          <Route path={"/profile"} render={() => <ProfilePage />} />
+          <Route path={"/profile"} render={() => <FeedPage />} />
           <Route path={"/dialogs"} render={() => <DialogsPage />} />
           <Route path={"/friends"} render={() => <UsersPage />} />
           {/* <Route path={"/news"} component={NewsPage} /> */}
