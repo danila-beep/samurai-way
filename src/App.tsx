@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import "./App.css";
-import { Header } from "./components/Header/Header";
 import { SideBar } from "./components/SideBar/SideBar";
 import { Route } from "react-router-dom";
 import FeedPage from "./pages/FeedPage/FeedPage";
 import { DialogsPage } from "./pages/DialogsPage/DialogsPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
+import { Header } from "./components/Header/Header";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 type AppProps = {};
 
@@ -14,15 +15,22 @@ const App: FC<AppProps> = (props) => {
     <div className="App">
       <Header />
       <main>
-        <SideBar />
-        <div className="Content">
-          <Route path={"/profile"} render={() => <FeedPage />} />
+        <Route exact path={"/"} render={() => <FeedPage />} />
+        <Route path={"/feed"} render={() => <FeedPage />} />
+        <Route path={"/profile/:userId"} render={() => <ProfilePage />} />
+        <Route path={"/dialogs"} render={() => <DialogsPage />} />
+        <Route path={"/friends"} render={() => <UsersPage />} />
+
+        {/* <div className="SideBarWrapper">
+          <SideBar />
+        </div>
+        <div className="ContentWrapper">
+          <Route exact path={"/"} render={() => <FeedPage />} />
+          <Route path={"/feed"} render={() => <FeedPage />} />
+          <Route path={"/profile/:userId"} render={() => <ProfilePage />} />
           <Route path={"/dialogs"} render={() => <DialogsPage />} />
           <Route path={"/friends"} render={() => <UsersPage />} />
-          {/* <Route path={"/news"} component={NewsPage} /> */}
-          {/* <Route path={"/music"} component={MusicPage} /> */}
-          {/* <Route path={"/settings"} component={SettingsPage} /> */}
-        </div>
+        </div> */}
       </main>
     </div>
   );

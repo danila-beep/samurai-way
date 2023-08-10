@@ -6,6 +6,8 @@ const socialMediaInstance = axios.create({
 });
 
 export const socialMediaAPI = {
+
+  //user calls
   getUsers: (currentPage?: number, pageSize?: number) => {
     if (currentPage && pageSize) {
       return socialMediaInstance.get(
@@ -20,6 +22,11 @@ export const socialMediaAPI = {
   },
   unfollowUser: (userId: number) => {
     return socialMediaInstance.delete(`follow/${userId}`)
+  },
+
+  //profile calls
+  getUserProfile: (userId: string) => {
+    return socialMediaInstance.get(`profile/${userId}`)
   }
 };
 

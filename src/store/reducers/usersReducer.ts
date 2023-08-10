@@ -8,7 +8,7 @@ const usersState = {
     totalUsersCount: 0,
     error: null,
   },
-  pageSize: 6,
+  pageSize: 9,
   totalUsersCount: 0,
   currentPage: 1,
   paginationCount: [1, 2, 3, 4, 5],
@@ -106,7 +106,7 @@ export const unfollowUserAC = (userId: number) => {
 export const setUsersAC = (users: UsersListType) => {
   return { type: "usersPage/setUsers", users } as const;
 };
-export const currentPageChengerAC = (value: number) => {
+export const currentPageChangerAC = (value: number) => {
   return { type: "usersPage/changeCurrentPage", value } as const;
 };
 export const setTotalUsersCount = (value: number) => {
@@ -182,7 +182,7 @@ type ActionsType =
   | ReturnType<typeof followUserAC>
   | ReturnType<typeof unfollowUserAC>
   | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof currentPageChengerAC>
+  | ReturnType<typeof currentPageChangerAC>
   | ReturnType<typeof setTotalUsersCount>
   | ReturnType<typeof nextPagesPaginationAC>
   | ReturnType<typeof previousPagesPaginationAC>;

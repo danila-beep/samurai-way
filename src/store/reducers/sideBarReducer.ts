@@ -1,4 +1,5 @@
 const sideBarState = [
+  { link: "feed", title: "Feed" },
   { link: "profile", title: "Profile" },
   { link: "dialogs", title: "Dialogs" },
   { link: "friends", title: "Users" },

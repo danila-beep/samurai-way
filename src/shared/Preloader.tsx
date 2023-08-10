@@ -23,10 +23,11 @@ const rotate = keyframes`
 `;
 
 const PreloaderStyled = styled.div`
-  display: inline-block;
-  position: relative;
+  display: flex;
   width: 80px;
   height: 80px;
+  align-items: center;
+  justify-content: center;
 
   & div {
     box-sizing: border-box;
