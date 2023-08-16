@@ -6,12 +6,14 @@ import usersReducer from "./reducers/usersReducer";
 import thunk from "redux-thunk";
 import { authReducer } from "./reducers/authReducer";
 import { appReducer } from "./reducers/appReducer";
+import { feedReducer } from "./reducers/feedReducer";
 
 const reducers = combineReducers({
   app: appReducer,
   auth: authReducer,
   sideBar: sideBarReducer,
   profilePage: profileReducer,
+  feed: feedReducer,
   dialogsPage: dialogsReducer,
   usersPage: usersReducer,
 });

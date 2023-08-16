@@ -32,7 +32,7 @@ export const SideBar: FC<SideBarProps> = (props) => {
   };
 
   const sideBarUserNameRender = () => {
-    return isAuthorized ? loggedUserData.fullName : "login / create an accaunt"
+    return isAuthorized ? loggedUserData.fullName : "login"
   }
 
   const sideBarUserLinkRender = () => {
@@ -47,7 +47,7 @@ export const SideBar: FC<SideBarProps> = (props) => {
         className={s.sideBarItem}
         activeClassName={s.sideBarItemActive}
       >
-        <UilHome size={30} />
+        {navI.icon}
         {navI.title}
       </NavLink>
     );

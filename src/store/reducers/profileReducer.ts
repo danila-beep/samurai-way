@@ -4,7 +4,6 @@ import { socialMediaAPI } from "../../api/socialMediaAPI";
 
 const profilePageState = {
   profile: {},
-  posts: [],
 };
 
 const profileReducer = (
@@ -12,11 +11,6 @@ const profileReducer = (
   action: ActionsType
 ) => {
   switch (action.type) {
-    case "profilePage/AddPost":
-      return {
-        ...state,
-        posts: [action.newPost, ...state.posts],
-      };
     case "profilePage/SetUserProfile": {
       return {
         ...state,
@@ -72,7 +66,6 @@ export const getUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
 //types
 type ProfilePageStateType = {
   profile: ProfileInfoType;
-  posts: PostType[];
 };
 
 export type ProfileInfoType = {
@@ -97,15 +90,9 @@ export type ProfileInfoType = {
   status?: string;
 };
 
-type PostType = {
-  postId: string;
-  postText: string;
-};
-
-type AddPostActionType = ReturnType<typeof addPostAC>;
 type SetUserProfileType = ReturnType<typeof setUserProfileAC>;
 type SetUserStatusType = ReturnType<typeof setUserStatusAC>;
 
-type ActionsType = AddPostActionType | SetUserProfileType | SetUserStatusType;
+type ActionsType = SetUserProfileType | SetUserStatusType;
 
 export default profileReducer;
