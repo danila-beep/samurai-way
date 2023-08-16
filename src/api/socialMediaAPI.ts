@@ -5,6 +5,16 @@ const socialMediaInstance = axios.create({
   withCredentials: true,
 });
 
+export const authApi = {
+  //получение данных о статусе пользователя
+  me: () => {
+    return socialMediaInstance.get("auth/me")
+  },
+  login: (data: LoginDataType) => {
+    return socialMediaInstance.post("auth/login", {...data})
+  }
+}
+
 export const socialMediaAPI = {
 
   //user calls
@@ -25,9 +35,19 @@ export const socialMediaAPI = {
   },
 
   //profile calls
-  getUserProfile: (userId: string) => {
+  getUserProfile: (userId: number) => {
     return socialMediaInstance.get(`profile/${userId}`)
+  },
+  getUserStatus: (userId: number) => {
+    return socialMediaInstance.get(`profile/status/${userId}`)
   }
 };
 
-export type UsersResponseType = {};
+
+export type LoginDataType = {
+  email: string,
+  password: string,
+  rememberMe?: boolean,
+  captcha?: boolean
+}
+//TODO: типизация

@@ -18,10 +18,18 @@ const profileReducer = (
         posts: [action.newPost, ...state.posts],
       };
     case "profilePage/SetUserProfile": {
-      debugger
       return {
         ...state,
-        profile: action.profile
+        profile: action.profile,
+      };
+    }
+    case "profilePage/SetUserStatus": {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          status: action.status,
+        },
       };
     }
     default:
@@ -39,14 +47,27 @@ export const addPostAC = (postText: string) => {
 export const setUserProfileAC = (profile: ProfileInfoType) => {
   return { type: "profilePage/SetUserProfile", profile } as const;
 };
+export const setUserStatusAC = (status: string) => {
+  return { type: "profilePage/SetUserStatus", status } as const;
+};
 
 //thunk creators
 export const setUserProfileTC =
-  (userId: string) => async (dispatch: Dispatch) => {
+  (userId: number) => async (dispatch: Dispatch) => {
     socialMediaAPI.getUserProfile(userId).then((res) => {
-      dispatch(setUserProfileAC(res.data))
+      dispatch(setUserProfileAC(res.data));
     });
   };
+export const getUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
+  socialMediaAPI
+    .getUserStatus(userId)
+    .then((res) => {
+      dispatch(setUserStatusAC(res.data));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 //types
 type ProfilePageStateType = {
@@ -54,7 +75,7 @@ type ProfilePageStateType = {
   posts: PostType[];
 };
 
-type ProfileInfoType = {
+export type ProfileInfoType = {
   userId?: number;
   lookingForAJob?: boolean;
   lookingForAJobDescription?: string;
@@ -73,6 +94,7 @@ type ProfileInfoType = {
     small: string;
     large: string;
   };
+  status?: string;
 };
 
 type PostType = {
@@ -82,7 +104,8 @@ type PostType = {
 
 type AddPostActionType = ReturnType<typeof addPostAC>;
 type SetUserProfileType = ReturnType<typeof setUserProfileAC>;
+type SetUserStatusType = ReturnType<typeof setUserStatusAC>;
 
-type ActionsType = AddPostActionType | SetUserProfileType;
+type ActionsType = AddPostActionType | SetUserProfileType | SetUserStatusType;
 
 export default profileReducer;

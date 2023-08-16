@@ -1,0 +1,97 @@
+.loginPageWrapper {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(242, 242, 242, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: show1 1s ease;
+}
+
+@keyframes show1 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+form {
+  position: relative;
+  width: 30%;
+  height: 60%;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem 2rem;
+  animation: show ease 2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border: .1rem solid black;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+    width: 15%;
+    height: 40%;
+  }
+  to {
+    width: 30%;
+    height: 60%;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+form h1 {
+  text-align: center;
+}
+
+form > label {
+  width: 100%;
+}
+
+form > input {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.rememberMeCheckBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    gap: 1rem;
+}
+
+.submitButton {
+    margin: 0;
+    width: 50%;
+    position: absolute;
+    padding: 1rem 0;
+    bottom: -1.5rem;
+    left: 25%;
+    border-radius: .5rem;
+    border: .1rem solid black;
+    background: var(--input-color);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.submitButton:hover {
+    background: rgb(207, 204, 204);
+}
+
+.submitButton:active {
+    transform: scale(105%);
+}

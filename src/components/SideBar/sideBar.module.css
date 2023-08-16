@@ -19,20 +19,24 @@
 .sideBarUserImage {
     width: 3rem;
     height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sideBarUserImage img {
     width: 100%;
     height: 100%;
+    border-radius: .5rem;
 }
 
-.sideBarUserInfo p:last-child {
+.sideBarUserInfo a {
     color: grey;
     transition: .3s;
     cursor: pointer;
 }
 
-.sideBarUserInfo p:last-child:hover {
+.sideBarUserInfo a:hover {
     color: #0085ff;
 }
 

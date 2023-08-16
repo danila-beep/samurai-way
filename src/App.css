@@ -1,10 +1,7 @@
 .App {
-  min-height: 200vh;
+  min-height: 100vh;
   min-width: 100vw;
   background: var(--input-color);
-  background-image: url("/src//assets/wave.svg");
-  background-position: bottom;
-  background-repeat: no-repeat;
 }
 
 main {

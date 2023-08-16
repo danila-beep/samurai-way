@@ -4,21 +4,33 @@ import {
   UilCommentDots,
   UilDraggabledots,
   UilEdit,
+  UilSliderHRange,
   UilUser,
 } from "@iconscout/react-unicons";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { setUserProfileTC } from "../../store/reducers/profileReducer";
+import { authStateType } from "../../store/reducers/authReducer";
+import ProfileStatus from "../../components/ProfileStatus/ProfileStatus";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const profilePageData = useSelector((state: RootState) => state.profilePage);
   const { userId } = useParams<{ userId: string }>();
+  let myId = useSelector<RootState, number | undefined>(
+    (state) => state.auth.data?.id
+  );
 
   useEffect(() => {
-    dispatch(setUserProfileTC(userId));
-  }, []);
+    if (!userId) {
+      if (myId) {
+        dispatch(setUserProfileTC(myId));
+      }
+    } else {
+      dispatch(setUserProfileTC(Number(userId)));
+    }
+  }, [dispatch, userId, myId]);
 
   return (
     <div className={s.profilePageContainer}>
@@ -52,10 +64,11 @@ const ProfilePage = () => {
               Edit Profile
             </button>
             <button className={s.moreActionsButton}>
-              <UilDraggabledots />
+              <UilSliderHRange />
             </button>
           </div>
         </div>
+        <ProfileStatus userId={profilePageData.profile.userId}/>
         <hr />
         <div className={s.profilePageHeaderNavigation}>
           <ul>

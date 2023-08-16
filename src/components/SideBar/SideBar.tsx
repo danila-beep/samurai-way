@@ -3,13 +3,41 @@ import s from "./sideBar.module.css";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RootState } from "../../store/store";
-import { UilHome, UilOperaAlt, UilPolygon } from "@iconscout/react-unicons";
-import miniAva from "../../assets/UserImageSample.jpg"
+import {
+  UilHome,
+  UilOperaAlt,
+  UilPolygon,
+  UilUser,
+} from "@iconscout/react-unicons";
+import miniAva from "../../assets/UserImageSample.jpg";
+import { useAppSelector } from "../../utils/hooks/useAppSelector";
 
 type SideBarProps = {};
 
 export const SideBar: FC<SideBarProps> = (props) => {
-  const sideBarData = useSelector((state: RootState) => state.sideBar);
+  const sideBarData = useAppSelector((state) => state.sideBar);
+  const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
+  const loggedUserData = useAppSelector((state) => state.app);
+
+  const sideBarUserPhotoRender = () => {
+    return isAuthorized ? (
+      loggedUserData.photos?.small ? (
+        loggedUserData.photos.small
+      ) : (
+        <img src={miniAva} alt="" />
+      )
+    ) : (
+      <UilUser />
+    );
+  };
+
+  const sideBarUserNameRender = () => {
+    return isAuthorized ? loggedUserData.fullName : "login / create an accaunt"
+  }
+
+  const sideBarUserLinkRender = () => {
+    return isAuthorized ? `@${loggedUserData.fullName}:${loggedUserData.userId}` : ""
+  }
 
   const navigationItemsForRender = sideBarData.map((navI) => {
     return (
@@ -19,7 +47,7 @@ export const SideBar: FC<SideBarProps> = (props) => {
         className={s.sideBarItem}
         activeClassName={s.sideBarItemActive}
       >
-        <UilHome size={30}/>
+        <UilHome size={30} />
         {navI.title}
       </NavLink>
     );
@@ -27,15 +55,13 @@ export const SideBar: FC<SideBarProps> = (props) => {
   return (
     <div className={s.sideBarContainer}>
       <div className={s.sideBarUserContainer}>
-        <div className={s.sideBarUserImage}>
-          <img src={miniAva} alt="" />
-        </div>
+        <div className={s.sideBarUserImage}>{sideBarUserPhotoRender()}</div>
         <div className={s.sideBarUserInfo}>
-          <p>User Name</p>
-          <p>@userlink</p>
+          <p>{sideBarUserNameRender()}</p>
+          <NavLink to={"/profile"}>{sideBarUserLinkRender()}</NavLink>
         </div>
       </div>
-      <hr className={s.separator}/>
+      <hr className={s.separator} />
       <div className={s.sideBarList}>{navigationItemsForRender}</div>
     </div>
   );

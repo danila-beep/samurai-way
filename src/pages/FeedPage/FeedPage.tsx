@@ -1,36 +1,29 @@
-import React, { FC, useEffect, useState, KeyboardEvent } from "react";
+import React, { FC, useState } from "react";
 import s from "./feedPage.module.css";
 import Post from "../../components/Post/Post";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import TextArea from "../../shared/TextArea";
-import { Button } from "../../shared/Button";
 import {
   addPostAC,
-  setUserProfileTC,
 } from "../../store/reducers/profileReducer";
 import {
-  UilArrow,
   UilArrowRight,
-  UilCommentDots,
-  UilDesktopSlash,
   UilEmoji,
   UilImage,
-  UilPen,
   UilPlus,
   UilSmile,
   UilUser,
   UilVideo,
 } from "@iconscout/react-unicons";
-import { useParams } from "react-router-dom";
 import { SideBar } from "../../components/SideBar/SideBar";
 import miniAva from "../../assets/UserImageSample.jpg";
+import { useAppSelector } from "../../utils/hooks/useAppSelector";
+import { useAppDispatch } from "../../utils/hooks/useAppDispatch";
 
 type FeedPageProps = {};
 
 const FeedPage: FC<FeedPageProps> = (props) => {
-  const profilePageData = useSelector((state: RootState) => state.profilePage);
-  const dispatch = useDispatch();
+  const profilePageData = useAppSelector(state => state.profilePage);
+  const dispatch = useAppDispatch();
+  const isAuthorized = useAppSelector(state => state.auth.isAuthorized)
 
   const [textAreaValue, setTextAreaValue] = useState<string>("");
 
@@ -38,6 +31,8 @@ const FeedPage: FC<FeedPageProps> = (props) => {
     dispatch(addPostAC(textAreaValue));
     setTextAreaValue("");
   };
+
+  
 
   return (
     <div className={s.feedPageWrapper}>

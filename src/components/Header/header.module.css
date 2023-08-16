@@ -106,6 +106,13 @@
 
 }
 
+.headerLoginButton a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .8rem;
+}
+
 .headerProfileSettings ul li svg {
   color: #888888;
 }
