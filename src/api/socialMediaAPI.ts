@@ -12,6 +12,9 @@ export const authApi = {
   },
   login: (data: LoginDataType) => {
     return socialMediaInstance.post("auth/login", {...data})
+  },
+  logout: () => {
+    return socialMediaInstance.delete("auth/login")
   }
 }
 

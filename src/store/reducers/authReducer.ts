@@ -32,6 +32,12 @@ export const authReducer = (state = initialState, action: ActionsType) => {
         isAuthorized: action.isAuthorized,
       };
     }
+    case "auth/logout": {
+      return {
+        ...state,
+        isAuthorized: action.isAuthorized,
+      };
+    }
 
     default:
       return state;
@@ -47,6 +53,9 @@ export const meAC = (data: {
 };
 export const loginAC = () => {
   return { type: "auth/login", isAuthorized: true } as const;
+};
+export const logoutAC = () => {
+  return { type: "auth/logout", isAuthorized: false } as const;
 };
 
 export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
@@ -78,6 +87,11 @@ export const loginTC = (data: LoginDataType) => (dispatch: Dispatch) => {
       console.log((err as { message: string }).message);
     });
 };
+export const logoutTC = () => (dispatch: Dispatch) => {
+  authApi.logout().then((res) => {
+    dispatch(logoutAC());
+  });
+};
 
 export type authStateType = {
   isAuthorized: boolean;
@@ -90,5 +104,6 @@ export type authStateType = {
 
 type MeActionType = ReturnType<typeof meAC>;
 type LoginActionType = ReturnType<typeof loginAC>;
+type LogoutActionType = ReturnType<typeof logoutAC>;
 
-type ActionsType = MeActionType | LoginActionType;
+type ActionsType = MeActionType | LoginActionType | LogoutActionType;

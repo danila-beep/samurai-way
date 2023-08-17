@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./header.module.css";
 import {
   UilBell,
@@ -18,13 +18,15 @@ import { NavLink } from "react-router-dom";
 import useSelection from "antd/lib/table/hooks/useSelection";
 import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { meTC } from "../../store/reducers/authReducer";
+import { logoutTC, meTC } from "../../store/reducers/authReducer";
 
 export const Header = () => {
   const isAuthorized = useSelector<RootState, boolean>(
     (state) => state.auth.isAuthorized
   );
   const dispatch = useDispatch();
+
+  const [logoutMenu, setLogoutMenu] = useState<boolean>(false)
 
   useEffect(() => {
     dispatch(meTC());
@@ -69,8 +71,9 @@ export const Header = () => {
               <UilBell />
             </li>
             {isAuthorized ? (
-              <li className={s.headerUserImage}>
+              <li className={s.headerUserImage} onClick={() => setLogoutMenu(prev => !prev)} onBlur={() => setLogoutMenu(false)} tabIndex={0}>
                 <img src={miniAva} alt="" />
+                {logoutMenu && <div onClick={() => dispatch(logoutTC())}>logout</div>}
               </li>
             ) : (
               <li className={s.headerLoginButton}>

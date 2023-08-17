@@ -30,7 +30,7 @@ const UsersPage = () => {
   );
   const dispatch = useDispatch();
 
-  //API "get" call
+  //API "get" call for users
   useEffect(() => {
     dispatch(getUsersTC(usersPageData.currentPage, usersPageData.pageSize));
   }, [dispatch, usersPageData.currentPage, usersPageData.pageSize]);

@@ -71,7 +71,7 @@ const FeedPosts = () => {
       </div>
       <div className={s.feedPagePostsListContainer}>
         {postsData.map((post) => [
-          <Post key={post.id} postText={post.body} postId={post.id} />,
+          <Post key={post.id} postText={post.body} postId={post.id} userId={post.userId}/>,
         ])}
       </div>
     </div>
