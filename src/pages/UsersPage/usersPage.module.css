@@ -1,12 +1,19 @@
 .userPageContainer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 2rem;
 }
 
 .userPageUsersListContainer {
+  margin-left: 21rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.userPageUsersListContainer > div:first-child {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -1,0 +1,30 @@
+.feedPageRightSideBarFriendCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedPageRightSideBarFriendCard:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.feedPageRightSideBarFriendCard div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feedPageRightSideBarFriendCard img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.feedPageRightSideBarFriendCard p {
+  font-weight: 600;
+}
+
+.feedPageRightSideBarFriendCard svg {
+  justify-self: end;
+}

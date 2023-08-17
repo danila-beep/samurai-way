@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import s from "./feedPage.module.css";
 import Post from "../../components/Post/Post";
-import { addPostAC } from "../../store/reducers/profileReducer";
 import {
   UilArrowRight,
   UilEmoji,

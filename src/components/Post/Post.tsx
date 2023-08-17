@@ -8,12 +8,13 @@ import {
   UilUser,
 } from "@iconscout/react-unicons";
 import { useAppDispatch } from "../../utils/hooks/useAppDispatch";
-import { PostType, getImageTC } from "../../store/reducers/feedReducer";
 import { useAppSelector } from "../../utils/hooks/useAppSelector";
-import { imagesForPosts } from "../../entities/imagesForPosts";
 import { socialMediaAPI } from "../../api/socialMediaAPI";
 import { ProfileInfoType } from "../../store/reducers/profileReducer";
 import { NavLink } from "react-router-dom";
+import { getRandomName } from "../../utils/userNameGenerator";
+import miniAva from "../../assets/UserImageSample.jpg";
+import { AvatarGenerator } from "random-avatar-generator";
 
 type PostProps = {
   postText: string;
@@ -23,12 +24,13 @@ type PostProps = {
 
 const Post: FC<PostProps> = (props) => {
   const { postText } = props;
-  const dispatch = useAppDispatch();
-  const totalUserCount = useAppSelector(state => state.usersPage.totalUsersCount)
-
+  const imagesForPosts = useAppSelector<string[]>((state) => state.feed.images);
+  const avatarGenerator = new AvatarGenerator();
+  const loggedUserId = useAppSelector((state) => state.app.userId);
+  const loggedUserName = useAppSelector((state) => state.app.fullName);
 
   //НЕВОЗМОЖНО РЕАЛИЗОВАТЬ ТАК КАК ЕСТЬ ОГРАНИЧЕНИЕ НА КОЛИЧЕСТВО ЗАПРОСОВ
-  
+
   // const [localPostData, setLocalPostData] = useState<ProfileInfoType>();
 
   // useEffect(() => {
@@ -42,13 +44,38 @@ const Post: FC<PostProps> = (props) => {
   return (
     <div className={s.postWrapper}>
       <div className={s.postHeader}>
-        <NavLink
+        {/* <NavLink
           to={`/profile/${Math.floor(Math.random() * 29826)}`}
           className={s.postHeaderUserName}
         >
-          <UilUser />
-          <h3>user:{Math.floor(Math.random() * 29826)}</h3>
-        </NavLink>
+          {props.userId === loggedUserId ? (
+            <img src={miniAva} alt="" />
+          ) : (
+            <img src={avatarGenerator.generateRandomAvatar()} alt="" />
+          )}
+          {props.userId === loggedUserId ? (
+            <h3>{loggedUserName}</h3>
+          ) : (
+            <h3>{getRandomName()}</h3>
+          )}
+        </NavLink> */}
+        {props.userId === loggedUserId ? (
+          <NavLink
+            to={`/profile/${loggedUserId}`}
+            className={s.postHeaderUserName}
+          >
+            <img src={miniAva} alt="" />
+            <h3>{loggedUserName}</h3>
+          </NavLink>
+        ) : (
+          <NavLink
+            to={`/profile/${Math.floor(Math.random() * 29826)}`}
+            className={s.postHeaderUserName}
+          >
+            <img src={avatarGenerator.generateRandomAvatar()} alt="" />
+            <h3>{getRandomName()}</h3>
+          </NavLink>
+        )}
         <div className={s.postHeaderOptions}>
           <UilElipsisDoubleVAlt />
         </div>

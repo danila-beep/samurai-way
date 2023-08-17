@@ -1,12 +1,7 @@
 import React, { FC } from "react";
 import s from "./sideBar.module.css";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { RootState } from "../../store/store";
 import {
-  UilHome,
-  UilOperaAlt,
-  UilPolygon,
   UilUser,
 } from "@iconscout/react-unicons";
 import miniAva from "../../assets/UserImageSample.jpg";

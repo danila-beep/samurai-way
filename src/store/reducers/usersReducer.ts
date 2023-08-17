@@ -8,7 +8,7 @@ const usersState = {
     totalUsersCount: 0,
     error: null,
   },
-  pageSize: 9,
+  pageSize: 6,
   totalUsersCount: 0,
   currentPage: 1,
   paginationCount: [1, 2, 3, 4, 5],

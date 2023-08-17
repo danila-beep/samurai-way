@@ -22,12 +22,15 @@ import { UilArrowLeft, UilArrowRight } from "@iconscout/react-unicons";
 import { NavLink } from "react-router-dom";
 import { useSessionStorage } from "usehooks-ts";
 import Preloader from "../../shared/Preloader";
+import { SideBar } from "../../components/SideBar/SideBar";
+import { useAppSelector } from "../../utils/hooks/useAppSelector";
 
 const UsersPage = () => {
   //getting data from redux
   const usersPageData = useSelector<RootState, UserPageType>(
     (state) => state.usersPage
   );
+  const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
   const dispatch = useDispatch();
 
   //API "get" call for users
@@ -53,14 +56,14 @@ const UsersPage = () => {
           <button
             className={s.followButton}
             onClick={() => followButtonHandler(user.followed, user.id)}
-            disabled={user.followed ? true : false}
+            disabled={!isAuthorized && !user.followed ? true : false}
           >
             Follow
           </button>
           <button
             className={s.unfollowButton}
             onClick={() => unfollowButtonHandler(user.followed, user.id)}
-            disabled={user.followed ? false : true}
+            disabled={!isAuthorized && user.followed ? false : true}
           >
             Unfollow
           </button>
@@ -108,17 +111,20 @@ const UsersPage = () => {
     <Preloader />
   ) : (
     <div className={s.userPageContainer}>
-      <div className={s.userPageUsersListContainer}>{usersForRender}</div>
-      <div className={s.userPagePaginationContainer}>
-        <div
-          className={s.userPagePaginationChangeButton}
-          onClick={previousPages}
-        >
-          <UilArrowLeft />
-        </div>
-        {pagesForRender}
-        <div className={s.userPagePaginationChangeButton} onClick={nextPages}>
-          <UilArrowRight />
+      <SideBar />
+      <div className={s.userPageUsersListContainer}>
+        <div>{usersForRender}</div>
+        <div className={s.userPagePaginationContainer}>
+          <div
+            className={s.userPagePaginationChangeButton}
+            onClick={previousPages}
+          >
+            <UilArrowLeft />
+          </div>
+          {pagesForRender}
+          <div className={s.userPagePaginationChangeButton} onClick={nextPages}>
+            <UilArrowRight />
+          </div>
         </div>
       </div>
     </div>

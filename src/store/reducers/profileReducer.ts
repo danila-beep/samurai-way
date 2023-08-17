@@ -32,12 +32,6 @@ const profileReducer = (
 };
 
 //action creators
-export const addPostAC = (postText: string) => {
-  return {
-    type: "profilePage/AddPost",
-    newPost: { postId: v1(), postText },
-  } as const;
-};
 export const setUserProfileAC = (profile: ProfileInfoType) => {
   return { type: "profilePage/SetUserProfile", profile } as const;
 };

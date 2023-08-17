@@ -1,5 +1,5 @@
 .sideBarContainer {
-    position: relative;
+    position: fixed;
     background: white;
     display: flex;
     flex-direction: column;

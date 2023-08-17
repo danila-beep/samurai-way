@@ -1,21 +1,17 @@
 import axios from "axios";
+import { PostType } from "../store/reducers/feedReducer";
+import { v1 } from "uuid";
 
 const postsApiInstance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com/",
   headers: {},
-});
-const postImagesInstance = axios.create({
-  baseURL: "https://api.api-ninjas.com/v1/",
-  headers: {
-    "X-Api-Key": "d3WR8jhc50NJ5RofqE9JRg==XLE1b3sBiXxsbtzi",
-  },
 });
 
 export const postsAPI = {
   getPosts: () => {
     return postsApiInstance.get("posts");
   },
-  getImages: () => {
-    return postImagesInstance.get("randomimage");
+  addPost: (id: number, userId: number, title: string, body: string) => {
+    return postsApiInstance.post("posts", {id, userId, title, body});
   },
 };
