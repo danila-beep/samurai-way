@@ -44,21 +44,6 @@ const Post: FC<PostProps> = (props) => {
   return (
     <div className={s.postWrapper}>
       <div className={s.postHeader}>
-        {/* <NavLink
-          to={`/profile/${Math.floor(Math.random() * 29826)}`}
-          className={s.postHeaderUserName}
-        >
-          {props.userId === loggedUserId ? (
-            <img src={miniAva} alt="" />
-          ) : (
-            <img src={avatarGenerator.generateRandomAvatar()} alt="" />
-          )}
-          {props.userId === loggedUserId ? (
-            <h3>{loggedUserName}</h3>
-          ) : (
-            <h3>{getRandomName()}</h3>
-          )}
-        </NavLink> */}
         {props.userId === loggedUserId ? (
           <NavLink
             to={`/profile/${loggedUserId}`}

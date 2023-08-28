@@ -1,71 +1,87 @@
 .postWrapper {
-    background: white;
-    margin-top: 2rem;
-    padding: 1rem;
-    border-radius: .5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  background: white;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .postHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .postHeaderUserName {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .postHeaderUserName img {
-    width: 3rem;
-    height: 3rem;
-    border-radius: .5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
 }
 
 .postBody {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
 }
 
 .postBody p {
-    width: 50%;
-    border-right: .1rem solid black;
-    padding: 1rem;
+  width: 50%;
+  border-right: 0.1rem solid black;
+  padding: 1rem;
 }
 
-.postBody img{
-    width: 50%;
-    border-radius: 1rem;
+.postBody img {
+  width: 50%;
+  border-radius: 1rem;
 }
 
 .postShare {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .postShare svg {
-    transition: .3s;
-    cursor: pointer;
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 .postShare svg:hover {
-    transform: scale(105%);
+  transform: scale(105%);
 }
 
 .postShare svg:hover:nth-child(1) {
-    fill: orange;
+  fill: orange;
 }
 .postShare svg:hover:nth-child(2) {
-    fill: blue;
+  fill: blue;
 }
 .postShare svg:hover:nth-child(3) {
-    fill: red;
+  fill: red;
+}
+
+@media (max-width: 1025px) {
+  .postBody {
+    flex-direction: column;
+  }
+  .postBody p {
+    width: 100%;
+    border-right: none;
+    border-bottom: 0.1rem solid black;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: .5rem;
+  }
+  .postBody img {
+    width: 100%;
+  }
 }

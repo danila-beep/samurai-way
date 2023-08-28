@@ -8,7 +8,7 @@
 
 .headerContainer {
   position: relative;
-  padding: 1rem 14%;
+  padding: 1rem 5%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

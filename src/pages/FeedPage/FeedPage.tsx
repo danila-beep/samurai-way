@@ -1,32 +1,20 @@
-import React, { FC, useEffect, useState } from "react";
-import s from "./feedPage.module.css";
-import Post from "../../components/Post/Post";
-import {
-  UilArrowRight,
-  UilEmoji,
-  UilImage,
-  UilPlus,
-  UilSmile,
-  UilUser,
-  UilVideo,
-} from "@iconscout/react-unicons";
-import { SideBar } from "../../components/SideBar/SideBar";
-import miniAva from "../../assets/UserImageSample.jpg";
-import { useAppSelector } from "../../utils/hooks/useAppSelector";
-import { useAppDispatch } from "../../utils/hooks/useAppDispatch";
+import React, { FC } from "react";
 import FeedPosts from "../../components/FeedPosts/FeedPosts";
 import FeedRightSideBar from "../../components/FeedRightSideBar/FeedRightSideBar";
-import { getPostsTC } from "../../store/reducers/feedReducer";
+import { SideBar } from "../../components/SideBar/SideBar";
 
 type FeedPageProps = {};
 
 const FeedPage: FC<FeedPageProps> = (props) => {
   return (
-    <div className={s.feedPageWrapper}>
+    <>
       <SideBar />
       <FeedPosts />
       <FeedRightSideBar />
-    </div>
+      {/* <div>1</div>
+      <div>2</div>
+      <div>3</div> */}
+    </>
   );
 };
 

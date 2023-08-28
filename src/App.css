@@ -6,6 +6,10 @@
 
 main {
   padding-top: 8rem;
-  padding-left: 14%;
-  padding-right: 14%;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
 }
